@@ -1,9 +1,9 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { paginate } from "../utils/paginate";
+//import { paginate } from "../utils/paginate";
 const ProductComponent = ({ pageNumber, pageSize }) => {
   const products = useSelector((state) => state.allProducts.products);
-  const paginatedProducts = paginate(products, pageNumber, pageSize);
+  //const paginatedProducts = paginate(products, pageNumber, pageSize);
   console.log("paginated products", products);
   return products.map((product) => (
     <div
