@@ -1,26 +1,24 @@
 import React from "react";
-import { useSelector } from "react-redux";
 const Categories = ({ currentCategory, categoryChangeHandler }) => {
-  const products = useSelector((state) => state.allProducts.products);
-  const categories = [];
-  products.map((product) => categories.push(product.category));
-  const categoriesFinal = ["All Categories", ...new Set(categories)];
+  // const products = useSelector((state) => state.allProducts.products);
+  // const categories = [];
+  // products.map((product) => categories.push(product.category));
+  const categories = ["All Categories", "adidas", "reebok", "adizero"];
   return (
-    <ul className="list-group">
-      {categoriesFinal.map((category) => (
-        <li
-          key={category}
-          className={
-            category === currentCategory
-              ? "list-group-item active"
-              : "list-group-item"
-          }
-          onClick={() => categoryChangeHandler(category, products)}
-        >
-          {category}
-        </li>
-      ))}
-    </ul>
+    <div className="collapse navbar-collapse" id="myNav">
+      <div className="navbar-nav ">
+        {categories.map((category) => (
+          <a
+            className="nav-link text-nowrap"
+            aria-current="page"
+            key={category}
+            onClick={() => categoryChangeHandler("brand=" + category)}
+          >
+            {category}
+          </a>
+        ))}
+      </div>
+    </div>
   );
 };
 export default Categories;

@@ -1,14 +1,25 @@
 import React from "react";
-const SearchComponent = ({ value, onChange }) => {
+const SearchComponent = ({ onClick }) => {
+  let searchInput = React.createRef();
   return (
-    <div>
-      <input
-        type="search"
-        value={value}
-        className="form-control form-control-lg"
-        placeholder="Search..."
-        onChange={(e) => onChange(e.target.value)}
-      />
+    <div className="col-sm-6">
+      <div className="input-group">
+        <div className="form-outline">
+          <input
+            type="search"
+            ref={searchInput}
+            className="form-control"
+            placeholder="Search..."
+          />
+        </div>
+        <button
+          type="button"
+          className="btn btn-primary"
+          onClick={() => onClick("name=" + searchInput.current.value)}
+        >
+          <i class="fas fa-search"></i>
+        </button>
+      </div>
     </div>
   );
 };

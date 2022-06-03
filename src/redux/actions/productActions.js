@@ -6,6 +6,13 @@ export const setProducts = (products) => {
   };
 };
 
+export const searchProducts = (products) => {
+  return {
+    type: ActionTypes.SEARCH_PRODUCTS,
+    payload: products,
+  };
+};
+
 export const filterProducts = (category, filteredProducts) => {
   const filteredData = filteredProducts.filter(
     (product) => product.category === category
