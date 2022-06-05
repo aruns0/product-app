@@ -9,7 +9,6 @@ const Pagination = ({
   onNextClick,
 }) => {
   const noOfPages = Math.ceil(noOfProducts / productsPerPage);
-  console.log("noOfPages" + productsPerPage);
   const pages = _.range(1, noOfPages + 1);
   if (noOfPages === 1) return null;
   return (

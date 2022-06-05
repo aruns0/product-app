@@ -2,24 +2,22 @@ import "./App.css";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Header from "./containers/Header";
-import ProductListing from "./containers/ProductListing";
-import ProductDetail from "./containers/ProductDetail";
+import HeaderComponent from "./containers/HeaderComponent";
+import HomeComponent from "./containers/HomeComponent";
+import FooterComponent from "./containers/FooterComponent";
+import ProductsListComponent from "./containers/ProductsListComponent";
 
 function App() {
   return (
     <Provider store={store}>
       <div className="App">
         <BrowserRouter>
-          <Header />
+          <HeaderComponent />
           <Routes>
-            <Route path="/" element={<ProductListing />}></Route>
-            <Route
-              path="/products/:productId"
-              exact
-              component={ProductDetail}
-            ></Route>
+            <Route path="/" element={<HomeComponent />}></Route>
+            <Route path="/products" element={<ProductsListComponent />}></Route>
           </Routes>
+          <FooterComponent />
         </BrowserRouter>
       </div>
     </Provider>

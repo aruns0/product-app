@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { getProducts } from "../services/productService";
-import ProductComponent from "./ProductComponent";
+import ProductsComponent from "./ProductsComponent";
 import CategoryComponent from "./CategoryComponent";
 import SearchComponent from "./SearchComponent";
 import SortComponent from "./SortComponent";
@@ -9,39 +9,56 @@ import PaginationComponent from "./PaginationComponent";
 import { useEffect } from "react";
 import { useState } from "react";
 import { setProducts } from "../redux/actions/productActions";
-const ProductListing = () => {
-  //const products = useSelector((state) => state);
+import { setProduct } from "../redux/actions/productActions";
+import ProductComponent from "./ProductComponent";
+const ProductsListComponent = () => {
   const dispatch = useDispatch();
   const [currentCategory, setCurrentCategory] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOrder, setSortOrder] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage, setProductsPerPage] = useState(4);
   const [noOfProducts, setNoOfProducts] = useState(4);
+  const [isOpen, setIsOpen] = useState(false);
 
   const fetchProducts = (params) => {
-    //console.log("calling the API" + params);
     (async () => {
-      const response = await getProducts(params);
+      const response = await getProducts("?" + params);
       dispatch(setProducts(response.data.products));
       setProductsPerPage(response.data.page_limit);
       setNoOfProducts(response.data.total_records);
     })();
   };
+
+  const fetchProduct = (productId) => {
+    (async () => {
+      const response = await getProducts("/" + productId);
+      dispatch(setProduct(response.data.product));
+    })();
+  };
+
   useEffect(() => {
-    fetchProducts();
+    fetchProducts("");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  //popup
+  const togglePopup = (productId) => {
+    fetchProduct(productId);
+    setIsOpen(!isOpen);
+  };
+
+  //popup ends
+
   //filter starts
   const categoryChangeHandler = (category) => {
-    console.log("category", category);
+    setSearchQuery(" ");
     setCurrentCategory(category);
     setCurrentPage(1);
     if (category.includes("All")) {
       setCurrentCategory("");
-      fetchProducts();
+      fetchProducts("");
     } else {
-      setSearchQuery(" ");
       fetchProducts(category);
     }
   };
@@ -50,55 +67,78 @@ const ProductListing = () => {
   //search
   const searchChangeHandler = (query) => {
     setCurrentCategory("");
+    setSearchQuery(query);
     fetchProducts(query);
   };
   //end of search handler
 
   //sort
-  const sortChangeHandler = (sortOrder) => {
-    //setCurrentCategory("");
-    //setFilter(false);
-    //setSearchQuery(query);
-    console.log("query" + sortOrder);
-    // setParams(currentCategory + "&" + sortOrder);
-    fetchProducts(currentCategory + "&" + sortOrder);
+  const sortChangeHandler = (sort) => {
+    setSortOrder(sort);
+    fetchProducts(
+      currentCategory + "&" + searchQuery + "&page=" + currentPage + "&" + sort
+    );
   };
-  //end of sort handler
 
   // Pagination
   const previousClickHandler = () => {
     setCurrentPage(currentPage - 1);
-    fetchProducts(currentCategory + "&page=" + (currentPage - 1));
+    fetchProducts(
+      currentCategory +
+        "&" +
+        searchQuery +
+        "&" +
+        sortOrder +
+        "&page=" +
+        (currentPage - 1)
+    );
   };
+
   const nextClickHandler = () => {
     setCurrentPage(currentPage + 1);
-    console.log("currentpage" + currentPage);
-    fetchProducts(currentCategory + "&page=" + (currentPage + 1));
+    fetchProducts(
+      currentCategory +
+        "&" +
+        searchQuery +
+        "&" +
+        sortOrder +
+        "&page=" +
+        (currentPage + 1)
+    );
   };
+
   const pageChangeHandler = (page) => {
     setCurrentPage(page);
-    fetchProducts(currentCategory + "&page=" + page);
+    fetchProducts(
+      currentCategory + "&" + searchQuery + "&" + sortOrder + "&page=" + page
+    );
   };
   // End of pagination handlers
 
   return (
-    <div className="container bg-white">
+    <div>
       <nav className="navbar navbar-expand-md navbar-light bg-white">
-        <div className="container-fluid p-0">
-          <div className="row">
-            <div className="col section">
-              <CategoryComponent
-                currentCategory={currentCategory}
-                categoryChangeHandler={categoryChangeHandler}
-              />
-            </div>
-            <SearchComponent onClick={searchChangeHandler} />
-            <SortComponent onClick={sortChangeHandler} />
-          </div>
+        <div className="col-lg-4">
+          <CategoryComponent
+            currentCategory={currentCategory}
+            categoryChangeHandler={categoryChangeHandler}
+          />
         </div>
+        <SortComponent sortChangeHandler={sortChangeHandler} />
+
+        <SearchComponent
+          searchQuery={searchQuery}
+          onClick={searchChangeHandler}
+        />
       </nav>
-      <div className="row">
-        <ProductComponent pageNumber={currentPage} pageSize={productsPerPage} />
+      <div className="container bg-white">
+        <div className="row">
+          <ProductsComponent
+            pageNumber={currentPage}
+            pageSize={productsPerPage}
+            onClick={togglePopup}
+          />
+        </div>
       </div>
       <div className="row">
         <div className="col offset-sm-9">
@@ -114,7 +154,8 @@ const ProductListing = () => {
           }
         </div>
       </div>
+      <div>{isOpen && <ProductComponent handleClose={togglePopup} />}</div>
     </div>
   );
 };
-export default ProductListing;
+export default ProductsListComponent;

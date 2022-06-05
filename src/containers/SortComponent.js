@@ -1,11 +1,12 @@
 import React from "react";
-const SortComponent = ({ onClick }) => {
+const SortComponent = ({ sortChangeHandler }) => {
   return (
-    <div className="col section">
+    <div className="col-lg-5">
       <button
+        name="lowToHigh"
         className="btn shadow-none text-nowrap"
         type="button"
-        onClick={() => onClick("sort=price&dir=asc")}
+        onClick={() => sortChangeHandler("sort=price&dir=asc")}
       >
         Price (Low to High)
         <i className="fa fa-fw fa-sort"></i>
@@ -14,7 +15,7 @@ const SortComponent = ({ onClick }) => {
       <button
         className="btn  shadow-none text-nowrap"
         type="button"
-        onClick={() => onClick("sort=price&dir=desc")}
+        onClick={() => sortChangeHandler("sort=price&dir=desc")}
       >
         Price (High to Low)
         <i className="fa fa-fw fa-sort"></i>

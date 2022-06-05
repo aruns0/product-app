@@ -1,4 +1,4 @@
-import * as reducer from "../redux/reducers/productReducer";
+import * as reducer from "../redux/reducers/productsReducer";
 import { getProducts } from "../services/productService";
 let SET_PRODUCTS = "SET_PRODUCTS";
 const initialState = {
@@ -10,7 +10,7 @@ test("productReduces", async () => {
   const expectedProducts = record.data.products;
   const output = { products: expectedProducts };
   expect(
-    reducer.productReducer(initialState, {
+    reducer.productsReducer(initialState, {
       type: SET_PRODUCTS,
       payload: expectedProducts,
     })
