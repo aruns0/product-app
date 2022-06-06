@@ -1,70 +1,73 @@
-# Getting Started with Create React App
+# README
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is my first project using React library.As part of learning I have referenced youtube videoes,Stack overflow and several technical blogs written by experienced React developers.I tried my level best to include the best practices in a short span of time. Still a lot more to improve.
 
-## Available Scripts
+### -------------- Best Practices followed --------------
 
-In the project directory, you can run:
+### Seperation of Concerns
 
-### `npm start`
+Implemented seperation of concerns for handling authentication and logging.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Services
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Application specific services are included in the service layer.
 
-### `npm test`
+### Test Driven Development
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Test driven development approach is used for developing the application.
 
-### `npm run build`
+### Configuraion Management
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Configurations are managed in an env file to reduce the application dependency.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Security
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Token based authentication is implemented.
 
-### `npm run eject`
+### State Management
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Redux is used for managing the states.
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### -------------Instruction for setting up the application ----------------
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+- Clone the project
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+$ git clone https://github.com/aruns0/product-app.git
 
-## Learn More
+- Install dependencies
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+  $ npm install
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Run the test cases
 
-### Code Splitting
+  $ npm test
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- Run the Server
 
-### Analyzing the Bundle Size
+  $ npm start
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+- Url
 
-### Making a Progressive Web App
+$ http://localhost:3001/
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+### -------------Features---------------
 
-### Advanced Configuration
+- List products
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+- Filter products based on brand
 
-### Deployment
+- Pagination
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+- Search products based on name (global search)
 
-### `npm run build` fails to minify
+- Sort products based on price
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+### --------------------TODO--------------------------
+
+- Improve the code quality by learning best practices in react .
+- Improve the error handling.
+- Improve logging mechanism.
+- Improve the UI design.
+- Add more plugins like refux-thunk,enzyme,redux-auth etc.
+- Include more test cases to extend the code coverage.
+- Regression testing and bug fixing.
