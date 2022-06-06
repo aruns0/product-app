@@ -1,16 +1,19 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
 import { getProducts } from "../services/productService";
 import ProductsComponent from "./ProductsComponent";
+import ProductComponent from "./ProductComponent";
+import ErrorComponent from "./ErrorComponent";
 import CategoryComponent from "./CategoryComponent";
-import SearchComponent from "./SearchComponent";
+import SearchComponent from "./SearchProductComponent";
 import SortComponent from "./SortComponent";
 import PaginationComponent from "./PaginationComponent";
-import { useEffect } from "react";
-import { useState } from "react";
+
 import { setProducts } from "../redux/actions/productActions";
 import { setProduct } from "../redux/actions/productActions";
-import ProductComponent from "./ProductComponent";
+import { setError } from "../redux/actions/errorActions";
+
 const ProductsListComponent = () => {
   const dispatch = useDispatch();
   const [currentCategory, setCurrentCategory] = useState("");
@@ -20,20 +23,39 @@ const ProductsListComponent = () => {
   const [productsPerPage, setProductsPerPage] = useState(4);
   const [noOfProducts, setNoOfProducts] = useState(4);
   const [isOpen, setIsOpen] = useState(false);
-
+  const [key, setKey] = useState(1);
+  const isErrorOpen = useSelector((state) => state.error.isOpen);
   const fetchProducts = (params) => {
     (async () => {
-      const response = await getProducts("?" + params);
-      dispatch(setProducts(response.data.products));
-      setProductsPerPage(response.data.page_limit);
-      setNoOfProducts(response.data.total_records);
+      let response;
+      try {
+        response = await getProducts("?" + params);
+        if (!Object.keys(response).includes("error")) {
+          dispatch(setProducts(response.data.products));
+          setProductsPerPage(response.data.page_limit);
+          setNoOfProducts(response.data.total_records);
+        } else {
+          dispatch(setError(response.error));
+        }
+      } catch (error) {
+        dispatch(setError(error));
+      }
     })();
   };
 
   const fetchProduct = (productId) => {
     (async () => {
-      const response = await getProducts("/" + productId);
-      dispatch(setProduct(response.data.product));
+      let response;
+      try {
+        response = await getProducts("/" + productId);
+        if (!Object.keys(response).includes("error")) {
+          dispatch(setProduct(response.data.product));
+        } else {
+          dispatch(setError(response.error));
+        }
+      } catch (error) {
+        dispatch(setError(error));
+      }
     })();
   };
 
@@ -43,8 +65,8 @@ const ProductsListComponent = () => {
   }, []);
 
   //popup
-  const togglePopup = (productId) => {
-    fetchProduct(productId);
+  const productHandler = (productId) => {
+    if (typeof productId === "number") fetchProduct(productId);
     setIsOpen(!isOpen);
   };
 
@@ -52,6 +74,7 @@ const ProductsListComponent = () => {
 
   //filter starts
   const categoryChangeHandler = (category) => {
+    setKey(new Date().getTime());
     setSearchQuery(" ");
     setCurrentCategory(category);
     setCurrentPage(1);
@@ -79,6 +102,7 @@ const ProductsListComponent = () => {
       currentCategory + "&" + searchQuery + "&page=" + currentPage + "&" + sort
     );
   };
+  //sort ends
 
   // Pagination
   const previousClickHandler = () => {
@@ -119,24 +143,17 @@ const ProductsListComponent = () => {
     <div>
       <nav className="navbar navbar-expand-md navbar-light bg-white">
         <div className="col-lg-4">
-          <CategoryComponent
-            currentCategory={currentCategory}
-            categoryChangeHandler={categoryChangeHandler}
-          />
+          <CategoryComponent categoryChangeHandler={categoryChangeHandler} />
         </div>
         <SortComponent sortChangeHandler={sortChangeHandler} />
-
-        <SearchComponent
-          searchQuery={searchQuery}
-          onClick={searchChangeHandler}
-        />
+        <SearchComponent key={key} onClick={searchChangeHandler} />
       </nav>
       <div className="container bg-white">
         <div className="row">
           <ProductsComponent
             pageNumber={currentPage}
             pageSize={productsPerPage}
-            onClick={togglePopup}
+            onClick={productHandler}
           />
         </div>
       </div>
@@ -154,7 +171,8 @@ const ProductsListComponent = () => {
           }
         </div>
       </div>
-      <div>{isOpen && <ProductComponent handleClose={togglePopup} />}</div>
+      <div>{isOpen && <ProductComponent handleClose={productHandler} />}</div>
+      <div>{isErrorOpen && <ErrorComponent />}</div>
     </div>
   );
 };

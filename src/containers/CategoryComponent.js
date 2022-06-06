@@ -1,5 +1,5 @@
 import React from "react";
-const Categories = ({ currentCategory, categoryChangeHandler }) => {
+const Categories = ({ categoryChangeHandler }) => {
   const categories = ["All Categories", "adidas", "reebok", "adizero"];
   return (
     <div className="collapse navbar-collapse" id="myNav">

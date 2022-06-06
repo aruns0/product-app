@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import "./css/productComponent.css";
-const Popup = (props) => {
+const ProductComponent = ({ handleClose }) => {
   const product = useSelector((state) => state.product.product);
   return (
     <div className="popup-box">
       <div className="box">
-        <span className="close-icon" onClick={props.handleClose}>
+        <span className="close-icon" onClick={handleClose}>
           x
         </span>
         <div className="row m-0">
@@ -44,12 +44,8 @@ const Popup = (props) => {
                   </p>
                 </div>
                 <div className="col-lg-12">
-                  <h6>Quantity :</h6>
-                  <input
-                    type="number"
-                    className="form-control text-center w-100"
-                    value="1"
-                  />
+                  <h6>Quantity : 1 </h6>
+                  <h6>Size : {product.size} </h6>
                 </div>
                 <div className="col-lg-12 mt-3">
                   <div className="row">
@@ -74,4 +70,4 @@ const Popup = (props) => {
   );
 };
 
-export default Popup;
+export default ProductComponent;

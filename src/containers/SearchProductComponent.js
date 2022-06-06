@@ -1,5 +1,5 @@
 import React from "react";
-const SearchComponent = ({ searchQuery, onClick }) => {
+const SearchProductComponent = ({ onClick }) => {
   let searchInput = React.createRef();
   return (
     <div className="col-lg-3 input-group rounded">
@@ -20,4 +20,4 @@ const SearchComponent = ({ searchQuery, onClick }) => {
     </div>
   );
 };
-export default SearchComponent;
+export default SearchProductComponent;

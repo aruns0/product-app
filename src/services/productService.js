@@ -1,6 +1,7 @@
 import axios from "axios";
 import jwt from "jwt-decode";
 import { getToken } from "./authService";
+import { logMessage } from "./loggingService";
 export const getProducts = async (params) => {
   var latestToken;
   const url = process.env.REACT_APP_TOKEN_API + "products" + params;
@@ -17,5 +18,5 @@ export const getProducts = async (params) => {
         Authorization: latestToken,
       },
     })
-    .catch((error) => console.log("error", error));
+    .catch((error) => logMessage(error));
 };
