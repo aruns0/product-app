@@ -44,7 +44,7 @@ $ git clone https://github.com/aruns0/product-app.git
 
 - Run the test cases
 
-  $ npm test
+  $ npm run test -- -t 'product'
 
 - Run the Server
 
