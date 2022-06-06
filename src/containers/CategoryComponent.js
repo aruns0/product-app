@@ -2,7 +2,7 @@ import React from "react";
 const Categories = ({ categoryChangeHandler }) => {
   const categories = ["All Categories", "adidas", "reebok", "adizero"];
   return (
-    <div className="collapse navbar-collapse" id="myNav">
+    <div id="myNav">
       <div className="navbar-nav ">
         {categories.map((category) => (
           <a

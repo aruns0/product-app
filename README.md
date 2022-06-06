@@ -28,6 +28,10 @@ Token based authentication is implemented.
 
 Redux is used for managing the states.
 
+### Responsive design
+
+Bootstrap is used for the design.
+
 ### -------------Instruction for setting up the application ----------------
 
 - Clone the project
