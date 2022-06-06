@@ -62,6 +62,8 @@ $ http://localhost:3001/
 
 - Sort products based on price
 
+- Product Details page
+
 ### --------------------TODO--------------------------
 
 - Improve the code quality by learning best practices in react .
