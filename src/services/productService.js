@@ -4,9 +4,10 @@ import { getToken } from "./authService";
 import { logMessage } from "./loggingService";
 export const getProducts = async (params) => {
   var latestToken;
+  var expTime;
   const url = process.env.REACT_APP_TOKEN_API + "products" + params;
   const token = localStorage.getItem("token");
-  const expTime = jwt(token);
+  if (token) expTime = jwt(token);
   if (!token || expTime.exp * 1000 < new Date().getTime()) {
     const response = await getToken();
     latestToken = response.data.token;
